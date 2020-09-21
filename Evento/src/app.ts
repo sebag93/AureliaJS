@@ -5,7 +5,7 @@ export class App {
     config.title = 'Evento';
     config.map([
       {route: ['', 'home'], moduleId: './home'},
-      {route: 'users/register', moduleId: './users/view-models/register'}
+      {route: 'users', moduleId: './users/config/users-routing'}
     ]);
   }
 }
