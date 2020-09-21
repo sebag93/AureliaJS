@@ -74,6 +74,15 @@
           "aurelia-bootstrapper",
           "aurelia-loader-default",
           "aurelia-pal-browser",
+          "jquery",
+          {
+            "name": "bootstrap",
+            "path": "../node_modules/bootstrap/dist",
+            "main": "js/bootstrap.min",
+            "deps": ["jquery"],
+            "exports": "$",
+            "resources": ["css/bootstrap.css"]
+          },
           {
             "name": "aurelia-testing",
             "env": "dev"
