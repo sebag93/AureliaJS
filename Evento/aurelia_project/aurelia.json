@@ -74,6 +74,7 @@
           "aurelia-bootstrapper",
           "aurelia-loader-default",
           "aurelia-pal-browser",
+          "aurelia-fetch-client",
           "jquery",
           {
             "name": "bootstrap",
