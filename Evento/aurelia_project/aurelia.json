@@ -113,6 +113,13 @@
             "resources": ["css/bootstrap.css"]
           },
           {
+            "name": "toastr",
+            "path": "../node_modules/toastr",
+            "main": "toastr",
+            "deps": ["jquery"],
+            "resources": ["build/toastr.min.css"]
+          },
+          {
             "name": "aurelia-validation",
             "path": "../node_modules/aurelia-validation/dist/amd",
             "main": "aurelia-validation"
