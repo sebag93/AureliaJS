@@ -18,3 +18,39 @@ export class UsersService extends DataService  implements IUserService{
     }
 
 }
+
+interface IPdfGenerator{
+    generate(): void;
+}
+
+class PdfGenerator implements IPdfGenerator{
+    generate(): void{
+        //validate data
+        //generate pdf file
+        //save pdf file
+    }
+}
+
+class PdfGeneratorMock implements IPdfGenerator{
+    generate(): void{
+        //validate data
+        //generate pdf file
+    }
+}
+
+class PdfSerciveTests {
+    test(): void{
+        let pdfService = new PdfService(new PdfGeneratorMock);
+        pdfService.generatePdf(); 
+    }
+}
+
+class PdfService{
+    constructor(private pdfGenerator: IPdfGenerator){
+
+    }
+
+    generatePdf(): void{
+        this.pdfGenerator.generate();
+    }
+}
