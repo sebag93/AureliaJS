@@ -9,25 +9,34 @@
     "valueConverters": "resources/value-converters",
     "bindingBehaviors": "resources/binding-behaviors"
   },
+  "unitTestRunner": {
+    "id": "none",
+    "displayName": "None"
+  },
+  "editor": {
+    "id": "vscode",
+    "displayName": "Visual Studio Code"
+  },
   "transpiler": {
     "id": "typescript",
+    "displayName": "TypeScript",
     "fileExtension": ".ts",
     "dtsSource": [
-      "./types/**/*.d.ts"
+      "./custom_typings/**/*.d.ts"
     ],
-    "source": [
-      "src/**/*.ts"
-    ]
+    "source": "src/**/*.ts"
   },
   "markupProcessor": {
-    "source": [
-      "src/**/*.html"
-    ]
+    "id": "none",
+    "displayName": "None",
+    "fileExtension": ".html",
+    "source": "src/**/*.html"
   },
   "cssProcessor": {
-    "source": [
-      "src/**/*.css"
-    ]
+    "id": "none",
+    "displayName": "None",
+    "fileExtension": ".css",
+    "source": "src/**/*.css"
   },
   "jsonProcessor": {
     "source": [
@@ -35,46 +44,65 @@
     ]
   },
   "platform": {
-    "port": 9000,
-    "host": "localhost",
-    "open": false,
+    "id": "web",
+    "displayName": "Web",
+    "output": "scripts",
     "index": "index.html",
-    "baseDir": ".",
-    "output": "scripts"
+    "baseDir": "."
   },
   "build": {
     "targets": [
       {
-        "port": 9000,
+        "id": "web",
+        "displayName": "Web",
+        "output": "scripts",
         "index": "index.html",
-        "baseDir": ".",
-        "output": "scripts"
+        "baseDir": "."
       }
     ],
     "options": {
       "minify": "stage & prod",
-      "sourcemaps": "dev & stage",
-      "rev": "prod",
-      "cache": "dev & stage"
+      "sourcemaps": "dev & stage"
     },
     "bundles": [
       {
         "name": "app-bundle.js",
         "source": [
-          "**/*.{js,json,css,html}"
+          "[**/*.js]",
+          "**/*.{css,html}"
         ]
       },
       {
         "name": "vendor-bundle.js",
         "prepend": [
-          "node_modules/promise-polyfill/dist/polyfill.min.js",
+          "node_modules/bluebird/js/browser/bluebird.core.js",
+          "node_modules/aurelia-cli/lib/resources/scripts/configure-bluebird.js",
           "node_modules/requirejs/require.js"
         ],
         "dependencies": [
+          "aurelia-binding",
           "aurelia-bootstrapper",
-          "aurelia-loader-default",
-          "aurelia-pal-browser",
+          "aurelia-dependency-injection",
+          "aurelia-event-aggregator",
           "aurelia-fetch-client",
+          "aurelia-framework",
+          "aurelia-history",
+          "aurelia-history-browser",
+          "aurelia-loader",
+          "aurelia-loader-default",
+          "aurelia-logging",
+          "aurelia-logging-console",
+          "aurelia-metadata",
+          "aurelia-pal",
+          "aurelia-pal-browser",
+          "aurelia-path",
+          "aurelia-polyfills",
+          "aurelia-route-recognizer",
+          "aurelia-router",
+          "aurelia-task-queue",
+          "aurelia-templating",
+          "aurelia-templating-binding",
+          "text",
           "jquery",
           {
             "name": "bootstrap",
@@ -85,10 +113,26 @@
             "resources": ["css/bootstrap.css"]
           },
           {
-            "name": "aurelia-testing",
-            "env": "dev"
+            "name": "aurelia-validation",
+            "path": "../node_modules/aurelia-validation/dist/amd",
+            "main": "aurelia-validation"
           },
-          "text"
+          {
+            "name": "aurelia-templating-resources",
+            "path": "../node_modules/aurelia-templating-resources/dist/amd",
+            "main": "aurelia-templating-resources"
+          },
+          {
+            "name": "aurelia-templating-router",
+            "path": "../node_modules/aurelia-templating-router/dist/amd",
+            "main": "aurelia-templating-router"
+          },
+          {
+            "name": "aurelia-testing",
+            "path": "../node_modules/aurelia-testing/dist/amd",
+            "main": "aurelia-testing",
+            "env": "dev"
+          }
         ]
       }
     ],
@@ -103,7 +147,7 @@
             ".html",
             ".css"
           ],
-          "stub": false
+          "stub": true
         }
       ]
     }
