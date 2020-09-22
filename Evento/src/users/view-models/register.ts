@@ -13,6 +13,6 @@ export class UsersRegisterViewModel {
     }
 
     register(){
-        alert(this.model.login);
+        alert(this.model.name);
     }
 }

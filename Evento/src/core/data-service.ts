@@ -1,6 +1,6 @@
 import { HttpClient, json } from 'aurelia-fetch-client';
 
-export abstract class dataService {
+export abstract class DataService {
 
     protected constructor(private httpClient: HttpClient) {
         this.configureHttpClient();
@@ -35,7 +35,7 @@ export abstract class dataService {
 
     private configureHttpClient(){
         this.httpClient.configure(config => {
-            config.withBaseUrl('http://localhost:5000')
+            config.withBaseUrl('http://localhost:5000/')
         });
     }  
 }
