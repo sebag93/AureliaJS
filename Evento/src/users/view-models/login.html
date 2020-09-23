@@ -2,12 +2,14 @@
     <div class="page-header">
         <h1>Login</h1>
     </div>
-    <compose view-model="../../components/validation-alert" view-bind="../../components/validation-alert.html" model.bind="validationController"></compose>
+    <compose view-model="../../components/validation-alert" view-bind="../../components/validation-alert.html" 
+    model.bind="validationController"></compose>
     <form>
         <div validation-errors.bind="errors">
             <div class="form-group">
-                <label for="register-name">Login</label>
-                <input type="text" class="form-control" id="register-name" placeholder="Login" value.bind="model.name & validate">
+                <label for="register-email">Email</label>
+                <input type="text" class="form-control" id="register-email" placeholder="Email" 
+                value.bind="model.email & validate">
             </div>
             <div class="form-group">
                 <label for="register-password">Password</label>
@@ -20,7 +22,8 @@
                     Remember me
                 </label>
             </div>
-            <button type="submit" class="btn btn-primary" click.delegate="login()" disabled.bind="validationController.errors.length > 0">Login</button>
+            <button type="submit" class="btn btn-primary" click.delegate="login()" 
+                disabled.bind="validationController.errors.length > 0">Login</button>
         </div>
     </form>
 </template>

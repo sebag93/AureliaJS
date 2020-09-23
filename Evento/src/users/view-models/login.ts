@@ -3,6 +3,8 @@ import {LoginViewValidator} from '../validators/login-view-validator';
 import {ValidationControllerFactory, ValidationController} from 'aurelia-validation';
 import * as toastr from 'toastr';
 import {autoinject} from 'aurelia-dependency-injection';
+import { UsersService } from '../services/users-service';
+import { AuthService } from "../../core/auth-service";
 
 @autoinject()
 export class UsersLoginViewModel {
@@ -10,7 +12,8 @@ export class UsersLoginViewModel {
     private model: UserLoginModel;
     private rememberMe: boolean;
 
-    constructor(validator: LoginViewValidator, validationControllerFactory: ValidationControllerFactory){
+    constructor(private usersService: UsersService, validator: LoginViewValidator, 
+        validationControllerFactory: ValidationControllerFactory, private authService: AuthService){
         this.model = new UserLoginModel();
         this.rememberMe = true;
         this.validationController = validationControllerFactory.createForCurrentScope();
@@ -18,7 +21,8 @@ export class UsersLoginViewModel {
         validator.validate(this.model);
     }
 
-    login(){
-        toastr.success('Login succeed.');
+    async login(){
+        let userAuthModel = await this.usersService.login(this.model);
+        this.authService.setAccessToken(userAuthModel.token, this.rememberMe);
     }
 }
