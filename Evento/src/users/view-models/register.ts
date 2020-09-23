@@ -1,7 +1,7 @@
 import {autoinject} from 'aurelia-dependency-injection';
 import { UserRegisterModel } from '../models/user-register-model';
 import { HttpClient } from 'aurelia-fetch-client';
-import { IUserService, UsersService} from '../services/users-service';
+import { UsersService} from '../services/users-service';
 import { RegisterViewValidator} from '../validators/register-view-validator';
 import { ValidationControllerFactory, ValidationController} from 'aurelia-validation';
 import * as toastr from 'toastr';

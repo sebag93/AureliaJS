@@ -5,6 +5,7 @@ import { DataService } from '../../core/data-service';
 import { UserRegisterModel } from '../models/user-register-model';
 import { UserAuthModel } from '../models/user-auth-model';
 import { AuthService } from '../../core/auth-service';
+import { UserIdentityModel} from '../models/user-identity-model';
 
 
 @autoinject()
@@ -22,5 +23,10 @@ export class UsersService extends DataService{
     login(model: UserLoginModel): Promise<UserAuthModel>{
         let url = 'account/login';
         return super.post<UserAuthModel>(url,model,false);
+    }
+
+    getUserIdentity() : Promise<UserIdentityModel>{
+        let url = 'account';
+        return super.get<UserIdentityModel>(url,true);
     }
 }
