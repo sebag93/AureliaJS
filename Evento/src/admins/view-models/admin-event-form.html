@@ -1,0 +1,36 @@
+<template>
+    <div class="page-header">
+        <h1>${isCreateMode? 'Create event' : 'Edit event'}</h1>
+    </div>
+    <form>
+        <div class="form-group">
+            <label for="admin-event-form-name">Name</label>
+            <input type="text" class="form-control" id="admin-event-form-name" placeholder="Name" value.bind="model.name">
+        </div>
+        <div class="form-group">
+            <label for="admin-event-form-description">Description</label>
+            <input type="text" class="form-control" id="admin-event-form-description" placeholder="Description" value.bind="model.description">
+        </div>
+        <div if.bind="isCreateMode">
+            <div class="form-group">
+                <label for="admin-event-form-start-date">Start date</label>
+                <input type="text" class="form-control" id="admin-event-form-start-date" placeholder="Start date" value.bind="model.startDate">
+            </div>
+            <div class="form-group">
+                <label for="admin-event-form-end-date">End date</label>
+                <input type="text" class="form-control" id="admin-event-form-end-date" placeholder="End date" value.bind="model.endDate">
+            </div>
+            <div class="form-group">
+                <label for="admin-event-form-tickets">Tickets</label>
+                <input type="number" class="form-control" id="admin-event-form-tcikets" placeholder="Tickets" value.bind="model.tickets">
+            </div>
+            <div class="form-group">
+                <label for="admin-event-form-ticket-price">Ticket price</label>
+                <input type="number" class="form-control" id="admin-event-form-tciket-price" placeholder="Ticket price" value.bind="model.ticketPrice">
+            </div>
+        </div>
+        <button class="btn btn-warning" click.delegate="redirectToAdminEvents()">Cancel</button>
+        <button class="btn btn-success" click.delegate="createEvent()" if.bind="isCreateMode">Create event</button>
+        <button class="btn btn-primary" click.delegate="editEvent()" if.bind="!isCreateMode">Edit event</button>
+    </form>
+</template>

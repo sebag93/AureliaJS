@@ -1,21 +1,12 @@
 {
   "name": "Evento",
   "type": "project:application",
-  "paths": {
-    "root": "src",
-    "resources": "resources",
-    "elements": "resources/elements",
-    "attributes": "resources/attributes",
-    "valueConverters": "resources/value-converters",
-    "bindingBehaviors": "resources/binding-behaviors"
-  },
-  "unitTestRunner": {
-    "id": "none",
-    "displayName": "None"
-  },
-  "editor": {
-    "id": "vscode",
-    "displayName": "Visual Studio Code"
+  "platform": {
+    "id": "web",
+    "displayName": "Web",
+    "output": "scripts",
+    "index": "index.html",
+    "baseDir": "."
   },
   "transpiler": {
     "id": "typescript",
@@ -38,17 +29,21 @@
     "fileExtension": ".css",
     "source": "src/**/*.css"
   },
-  "jsonProcessor": {
-    "source": [
-      "src/**/*.json"
-    ]
+  "editor": {
+    "id": "vscode",
+    "displayName": "Visual Studio Code"
   },
-  "platform": {
-    "id": "web",
-    "displayName": "Web",
-    "output": "scripts",
-    "index": "index.html",
-    "baseDir": "."
+  "unitTestRunner": {
+    "id": "none",
+    "displayName": "None"
+  },
+  "paths": {
+    "root": "src",
+    "resources": "resources",
+    "elements": "resources/elements",
+    "attributes": "resources/attributes",
+    "valueConverters": "resources/value-converters",
+    "bindingBehaviors": "resources/binding-behaviors"
   },
   "build": {
     "targets": [
@@ -60,6 +55,21 @@
         "baseDir": "."
       }
     ],
+    "loader": {
+      "type": "require",
+      "configTarget": "vendor-bundle.js",
+      "includeBundleMetadataInConfig": "auto",
+      "plugins": [
+        {
+          "name": "text",
+          "extensions": [
+            ".html",
+            ".css"
+          ],
+          "stub": true
+        }
+      ]
+    },
     "options": {
       "minify": "stage & prod",
       "sourcemaps": "dev & stage"
@@ -120,6 +130,11 @@
             "resources": ["build/toastr.min.css"]
           },
           {
+            "name": "moment",
+            "path": "../node_modules/moment/min",
+            "main": "moment.min"
+          },
+          {
             "name": "aurelia-validation",
             "path": "../node_modules/aurelia-validation/dist/amd",
             "main": "aurelia-validation"
@@ -142,21 +157,6 @@
           }
         ]
       }
-    ],
-    "loader": {
-      "type": "require",
-      "configTarget": "vendor-bundle.js",
-      "includeBundleMetadataInConfig": "auto",
-      "plugins": [
-        {
-          "name": "text",
-          "extensions": [
-            ".html",
-            ".css"
-          ],
-          "stub": true
-        }
-      ]
-    }
+    ]
   }
 }

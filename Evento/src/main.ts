@@ -1,4 +1,4 @@
-import {Aurelia} from 'aurelia-framework';
+import {Aurelia} from 'aurelia-framework'
 import environment from './environment';
 
 export function configure(aurelia: Aurelia) {
@@ -6,10 +6,10 @@ export function configure(aurelia: Aurelia) {
     .standardConfiguration()
     .plugin('aurelia-validation');
 
-  if (environment.debug){
+  if (environment.debug) {
     aurelia.use.developmentLogging();
   }
-  
+
   if (environment.testing) {
     aurelia.use.plugin('aurelia-testing');
   }

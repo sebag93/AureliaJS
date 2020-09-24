@@ -5,34 +5,34 @@ import {Project, ProjectItem, CLIOptions, UI} from 'aurelia-cli';
 export default class AttributeGenerator {
   constructor(private project: Project, private options: CLIOptions, private ui: UI) { }
 
-  async execute() {
-    const name = await this.ui.ensureAnswer(
-      this.options.args[0],
-      'What would you like to call the custom attribute?'
-    );
+  execute() {
+    return this.ui
+      .ensureAnswer(this.options.args[0], 'What would you like to call the custom attribute?')
+      .then(name => {
+        let fileName = this.project.makeFileName(name);
+        let className = this.project.makeClassName(name);
 
-    let fileName = this.project.makeFileName(name);
-    let className = this.project.makeClassName(name);
+        this.project.attributes.add(
+          ProjectItem.text(`${fileName}.ts`, this.generateSource(className))
+        );
 
-    this.project.attributes.add(
-      ProjectItem.text(`${fileName}.ts`, this.generateSource(className))
-    );
-
-    await this.project.commitChanges();
-    await this.ui.log(`Created ${fileName}.`);
+        return this.project.commitChanges()
+          .then(() => this.ui.log(`Created ${fileName}.`));
+      });
   }
 
   generateSource(className) {
-    return `import {autoinject} from 'aurelia-framework';
+return `import {autoinject} from 'aurelia-framework';
 
 @autoinject()
 export class ${className}CustomAttribute {
   constructor(private element: Element) { }
 
   valueChanged(newValue, oldValue) {
-    //
+
   }
 }
-`;
+
+`
   }
 }

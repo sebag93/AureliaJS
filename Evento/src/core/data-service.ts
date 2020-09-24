@@ -1,5 +1,5 @@
-import { HttpClient, json } from 'aurelia-fetch-client';
-import { AuthService } from './auth-service';
+import {HttpClient, json} from 'aurelia-fetch-client';
+import {AuthService} from './auth-service';
 
 export abstract class DataService {
 
@@ -7,19 +7,19 @@ export abstract class DataService {
         this.configureHttpClient();
     }
 
-    protected get<TResult>(endpoint: string, isProtected: boolean) : Promise<TResult>{
+    protected get<TResult>(endpoint: string, isProtected: boolean) : Promise<TResult> {
         return this.createRequest('GET', endpoint, null, isProtected);
     }
 
-    protected post<TResult>(endpoint: string, data: any, isProtected: boolean) : Promise<TResult>{
+    protected post<TResult>(endpoint: string, data: any, isProtected: boolean) : Promise<TResult> {
         return this.createRequest('POST', endpoint, data, isProtected);
     }
 
-    protected put<TResult>(endpoint: string, data: any, isProtected: boolean) : Promise<TResult>{
+    protected put<TResult>(endpoint: string, data: any, isProtected: boolean) : Promise<TResult> {
         return this.createRequest('PUT', endpoint, data, isProtected);
     }
 
-    protected delete<TResult>(endpoint: string, isProtected: boolean) : Promise<TResult>{
+    protected delete<TResult>(endpoint: string, isProtected: boolean) : Promise<TResult> {
         return this.createRequest('DELETE', endpoint, null, isProtected);
     }
 
@@ -28,16 +28,16 @@ export abstract class DataService {
             method: method
         };
 
-        if (data != null)
+        if(data !== null)
             requestInit.body = json(data);
 
-        if (isProtected)
+        if(isProtected)
             requestInit.headers = this.createAuthorizationHeader();
 
-        return this.httpClient.fetch(endpoint,requestInit).then(response => response.json().catch(() => {}));
+        return this.httpClient.fetch(endpoint, requestInit).then<TResult>(response => response.json().catch(() => {}));
     }
 
-    private configureHttpClient(){
+    private configureHttpClient() {
         this.httpClient.configure(config => {
             config.withBaseUrl('http://localhost:5000/')
         });
@@ -45,6 +45,6 @@ export abstract class DataService {
 
     private createAuthorizationHeader() : any {
         let accessToken = this.authService.getAccessToken();
-        return { 'Authorization': `Bearer ${accessToken}`};
+        return { 'Authorization': `Bearer ${accessToken}` };
     }
 }

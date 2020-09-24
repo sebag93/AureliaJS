@@ -1,11 +1,13 @@
 <template>
+    <require from="../../core/date-format-value-converter"></require>
     <div class="page-header">
         <h1>Your events</h1>
     </div>
+    <button class="btn btn-primary" click.delegate="redirectToAdminEventForm()">Create new event</button>
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th>Name</th>
+                <th>Name</th>               
                 <th>Start date</th>
                 <th>End date</th>
                 <th>Tickets count</th>
@@ -17,14 +19,14 @@
         <tbody>
             <tr repeat.for="event of events">
                 <td>${event.name}</td>
-                <td>${event.startDate}</td>
-                <td>${event.endDate}</td>
+                <td>${event.startDate | dateFormat: 'M/D/YYYY h:mm:ss a'}</td>
+                <td>${event.endDate | dateFormat: 'M/D/YYYY h:mm:ss a'}</td>
                 <td>${event.ticketsCount}</td>
                 <td>${event.purchasedTicketsCount}</td>
                 <td>${event.availableTicketsCount}</td>
                 <td>
-                    <button class="btn btn-primary" click.delegate="">Edit</button>
-                    <button class="btn btn-danger" click.delegate="">Delete</button>
+                    <button class="btn btn-primary" click.delegate="redirectToAdminEventForm(event.id)">Edit</button>
+                    <button class="btn btn-danger" click.delegate="deleteEvent(event.id, $index)">Delete</button>
                 </td>
             </tr>
         </tbody>

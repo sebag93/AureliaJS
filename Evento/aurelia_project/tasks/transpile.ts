@@ -1,41 +1,40 @@
 import * as gulp from 'gulp';
-import * as gulpIf from 'gulp-if';
+import * as changedInPlace from 'gulp-changed-in-place';
 import * as plumber from 'gulp-plumber';
+import * as sourcemaps from 'gulp-sourcemaps';
+import * as notify from 'gulp-notify';
 import * as rename from 'gulp-rename';
 import * as ts from 'gulp-typescript';
 import * as project from '../aurelia.json';
-import * as fs from 'fs';
-import { Transform } from 'stream';
-import { CLIOptions, build, Configuration } from 'aurelia-cli';
+import {CLIOptions, build} from 'aurelia-cli';
+import * as eventStream from 'event-stream';
 
 function configureEnvironment() {
   let env = CLIOptions.getEnvironment();
 
-  return gulp.src(`aurelia_project/environments/${env}.ts`, { since: gulp.lastRun(configureEnvironment) })
+  return gulp.src(`aurelia_project/environments/${env}.ts`)
+    .pipe(changedInPlace({firstPass:true}))
     .pipe(rename('environment.ts'))
-    .pipe(new Transform({
-      objectMode: true,
-      transform: function (file, _, cb) {
-        // https://github.com/aurelia/cli/issues/1031
-        fs.unlink(`${project.paths.root}/${file.relative}`, function () { cb(null, file); });
-      }
-    }))
     .pipe(gulp.dest(project.paths.root));
 }
 
+var typescriptCompiler = typescriptCompiler || null;
+
 function buildTypeScript() {
-  const typescriptCompiler = ts.createProject('tsconfig.json', {
-    typescript: require('typescript'),
-    noEmitOnError: true
+  typescriptCompiler = ts.createProject('tsconfig.json', {
+    "typescript": require('typescript')
   });
 
-  return gulp.src(project.transpiler.dtsSource)
-    .pipe(gulp.src(project.transpiler.source, {
-      sourcemaps: true,
-      since: gulp.lastRun(buildTypeScript)
-    }))
-    .pipe(gulpIf(CLIOptions.hasFlag('watch'), plumber()))
+  let dts = gulp.src(project.transpiler.dtsSource);
+
+  let src = gulp.src(project.transpiler.source)
+    .pipe(changedInPlace({firstPass: true}));
+
+  return eventStream.merge(dts, src)
+    .pipe(plumber({ errorHandler: notify.onError('Error: <%= error.message %>') }))
+    .pipe(sourcemaps.init())
     .pipe(typescriptCompiler())
+    .pipe(sourcemaps.write({ sourceRoot: 'src' }))
     .pipe(build.bundle());
 }
 
@@ -43,4 +42,3 @@ export default gulp.series(
   configureEnvironment,
   buildTypeScript
 );
-

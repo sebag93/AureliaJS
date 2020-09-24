@@ -5,32 +5,33 @@ import {Project, ProjectItem, CLIOptions, UI} from 'aurelia-cli';
 export default class TaskGenerator {
   constructor(private project: Project, private options: CLIOptions, private ui: UI) { }
 
-  async execute() {
-    const name = await this.ui.ensureAnswer(
-      this.options.args[0],
-      'What would you like to call the task?'
-    );
+  execute() {
+    return this.ui
+      .ensureAnswer(this.options.args[0], 'What would you like to call the task?')
+      .then(name => {
+        let fileName = this.project.makeFileName(name);
+        let functionName = this.project.makeFunctionName(name);
 
-    let fileName = this.project.makeFileName(name);
-    let functionName = this.project.makeFunctionName(name);
+        this.project.tasks.add(
+          ProjectItem.text(`${fileName}.ts`, this.generateSource(functionName))
+        );
 
-    this.project.tasks.add(
-      ProjectItem.text(`${fileName}.ts`, this.generateSource(functionName))
-    );
-
-    await this.project.commitChanges();
-    await this.ui.log(`Created ${fileName}.`);
+        return this.project.commitChanges()
+          .then(() => this.ui.log(`Created ${fileName}.`));
+      });
   }
 
   generateSource(functionName) {
-    return `import * as gulp from 'gulp';
+return `import * as gulp from 'gulp';
+import * as changed from 'gulp-changed';
 import * as project from '../aurelia.json';
 
 export default function ${functionName}() {
   return gulp.src(project.paths.???)
+    .pipe(changed(project.paths.output, {extension: '.???'}))
     .pipe(gulp.dest(project.paths.output));
 }
-`;
 
+`
   }
 }

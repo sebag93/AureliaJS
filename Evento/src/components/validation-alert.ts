@@ -1,6 +1,7 @@
-import { ValidationController } from "aurelia-validation";
+import {ValidationController} from 'aurelia-validation';
 
-export class ValidationAlertViewModel{
+export class ValidationAlertViewModel {
+
     private validationController: ValidationController;
 
     activate(validationController: ValidationController) {

@@ -1,21 +1,23 @@
 <template>
-  <require from="bootstrap/css/bootstrap.css"></require>
-  <require from="toastr/build/toastr.min.css"></require>
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#/">Evento</a>
-      </div>
-      <div class="collapse navbar-collapse" if.bind="identityService.isUserLogged">
-        <span class="navbar-text navbar-right">
-          Hello ${identityService.userIdentity.name}!
-        </span>
-      </div>
+    <require from="bootstrap/css/bootstrap.css"></require>
+    <require from="toastr/build/toastr.min.css"></require>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#/">Evento</a>
+            </div> 
+            <div class="pull-right" if.bind="!identityService.isUserLogged">
+                <a class="btn navbar-btn btn-primary" href="#/users/register">Register</a>
+                <a class="btn navbar-btn btn-primary" href="#/users/login">Login</a>
+            </div> 
+            <div class="collapse navbar-collapse" if.bind="identityService.isUserLogged">
+                <span class="navbar-text navbar-right">
+                    Hello ${identityService.userIdentity.name}!
+                </span>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <router-view></router-view>
     </div>
-  </nav>
-
-  <div class="container">
-    <router-view></router-view>
-  </div>
-
 </template>

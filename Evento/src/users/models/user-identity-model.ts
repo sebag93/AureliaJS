@@ -1,4 +1,4 @@
-export class UserIdentityModel{
+export class UserIdentityModel {
     name: string;
     email: string;
     role: string;
