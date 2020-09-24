@@ -1,0 +1,32 @@
+<template>
+    <div class="page-header">
+        <h1>Your events</h1>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Start date</th>
+                <th>End date</th>
+                <th>Tickets count</th>
+                <th>Sold tickets</th>
+                <th>Available tickets</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr repeat.for="event of events">
+                <td>${event.name}</td>
+                <td>${event.startDate}</td>
+                <td>${event.endDate}</td>
+                <td>${event.ticketsCount}</td>
+                <td>${event.purchasedTicketsCount}</td>
+                <td>${event.availableTicketsCount}</td>
+                <td>
+                    <button class="btn btn-primary" click.delegate="">Edit</button>
+                    <button class="btn btn-danger" click.delegate="">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</template>

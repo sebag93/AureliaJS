@@ -30,8 +30,8 @@ export class App {
 
     config.map([
       { route: ['', 'home'], moduleId: './home' },
-      { route: 'users', moduleId: './users/config/users-routing' },
-      { route: 'admins', moduleId: './admins/config/admins-routing', settings: { roles: ['user'] } }
+      { route: 'users',    moduleId: './users/config/users-routing' },
+      { route: 'admins', moduleId: './admins/config/admins-routing', settings: { roles: ['admin'] }}
     ]);
   }
 }

@@ -6,7 +6,7 @@ export class AdminsRouting {
         config.title = 'Admins';
 
         config.map([
-            {route: 'events', moduleId: '../view-models/admin-events' }          
+            {route: 'events', moduleId: '../view-models/admin-events'}          
         ]);
     }
 }
